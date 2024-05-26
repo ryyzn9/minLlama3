@@ -48,7 +48,7 @@ class SimpleTokenizer:
         return ''.join(expand_token(token) for token in tokens)
 
 def load_tokenizer_data(size: int):
-    file_name = f'./tokenizers/tiny_shakespeare_tokenizer_{size}.model'
+    file_name = f'/content/minLlama3/tokenizers/tiny_shakespeare_tokenizer_{size}.model'
     with open(file_name, 'rb') as f:
         tokenizer_data = pickle.load(f)
     return tokenizer_data
