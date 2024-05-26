@@ -1,6 +1,10 @@
 # Heavily edited from Meta's original at https://github.com/meta-llama/llama3/blob/main/llama/model.py
 import math
 from typing import Optional, Tuple
+import torch
+import torch.nn as nn
+
+import torch.nn.functional as F
 
 from params import *
 
@@ -86,7 +90,7 @@ class Attention(nn.Module):
         x: torch.Tensor,
         freqs_cis: torch.Tensor,
         mask: Optional[torch.Tensor],
-        start_pos: int = None,
+        start_pos:  None,
     ):
         bsz, seqlen, _ = x.shape
         xq, xk, xv = self.wq(x), self.wk(x), self.wv(x)
@@ -174,7 +178,7 @@ class TransformerBlock(nn.Module):
         x: torch.Tensor,
         freqs_cis: torch.Tensor,
         mask: Optional[torch.Tensor],
-        start_pos: int = None,
+        start_pos: int ,
         training = False,
     ):
         h = x + F.dropout(self.attention(self.attention_norm(x), freqs_cis, mask, start_pos), p=self.dropout_rate, training=training)
@@ -333,7 +337,7 @@ class Llama3(nn.Module):
     def generate(
         self,
         prompt: str,
-        max_gen_len: int = None,
+        max_gen_len: int ,
         memory_saver_div: int = 1, # defaults to full max_seq_len**2 memory use. must be power of 2
         temperature: float = 0.6, # default value in meta's code
         top_p: float = 0.9, # default value in meta's code
