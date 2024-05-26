@@ -6,6 +6,10 @@ python_version = str(sys.version_info.major) + '.' + str(sys.version_info.minor)
 site_packages_path = os.path.join(venv_dir, 'lib', 'python' + python_version, 'site-packages')
 sys.path.append(site_packages_path) 
 
+import torch 
+
+from tqdm import tqdm
+
 
 # importing the model config
 from params import *
@@ -16,6 +20,9 @@ from model import *
 # used in the training loop
 import time
 
+from tiny_shakespeare_tokenizer import *
+
+
 # used to save & load models
 import json
 from dataclasses import asdict
@@ -23,7 +30,7 @@ from dataclasses import asdict
 
 
 # load the dataset
-with open('input.txt', 'r', encoding='utf-8') as f:
+with open('/content/minLlama3/input.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
 # the first 200 characters. It's just one continuous text document with all of the works of shakespeare back-to-back
