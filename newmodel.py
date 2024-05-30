@@ -145,8 +145,8 @@ class Attention(nn.Module):
         
         output = torch.matmul(scores, values)  # (bs, n_heads, seqlen, head_dim)
         o_shape = output.shape 
-        output= self.group_norm(output.reshape(-1, self.head_dim)).reshape(o_shape)
         output = output.transpose(1, 2).contiguous().view(bsz, seqlen, -1)
+        output= self.group_norm(output.reshape(-1, self.head_dim)).reshape(o_shape)
         return self.wo(self.swish( self.wg(x)*output ))
         
     def new_method(self, sequence_length):
