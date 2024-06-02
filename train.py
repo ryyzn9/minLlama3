@@ -119,7 +119,7 @@ start_time = time.time()
 # Enable anomaly detection. uncomment these lines if you need to do extensive debugging
 #torch.autograd.set_detect_anomaly(True)
 
-for iter in range(max_iters):
+for iter in tqdm(range(max_iters)):
 
     # sample a batch of data
     xb, yb = get_batch('train', params.max_batch_size)
@@ -139,7 +139,7 @@ for iter in range(max_iters):
         elapsed_time = current_time - start_time
         losses = estimate_loss(model, params.max_batch_size)
         current_lr = optimizer.param_groups[0]['lr']
-        print(f"step {iter:04d}: lr {current_lr:.6f}, train loss {losses['train']:.4f}, val loss {losses['val']:.4f}, time elapsed: {elapsed_time:.2f} seconds")
+        print(f"step {iter:04d}: lr {current_lr:.6f}, train loss {losses['train']:.4f}, val loss {losses['val']:.4f},ppl {torch.exp(losses['val']).mean().item():.0f} time elapsed: {elapsed_time:.2f} seconds")
 
 # Disable anomaly detection after the training loop
 #torch.autograd.set_detect_anomaly(False)
