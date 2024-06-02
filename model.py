@@ -337,7 +337,7 @@ class Llama3(nn.Module):
     def generate(
         self,
         prompt: str,
-        max_gen_len: int ,
+        max_gen_len: int = None ,
         memory_saver_div: int = 1, # defaults to full max_seq_len**2 memory use. must be power of 2
         temperature: float = 0.6, # default value in meta's code
         top_p: float = 0.9, # default value in meta's code
