@@ -144,8 +144,8 @@ class Attention(nn.Module):
         # scores = F.softmax(scores.float(), dim=-1).type_as(xq)
         
         output = torch.matmul(scores, values)  # (bs, n_heads, seqlen, head_dim)
-        o_shape = output.shape 
         output = output.transpose(1, 2).contiguous().view(bsz, seqlen, -1)
+        o_shape = output.shape 
         output= self.group_norm(output.reshape(-1, self.head_dim)).reshape(o_shape)
         return self.wo(self.swish( self.wg(x)*output ))
         
